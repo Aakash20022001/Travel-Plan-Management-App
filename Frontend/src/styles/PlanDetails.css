@@ -1,0 +1,72 @@
+/* Add this CSS to your stylesheet or component */
+.travel-plan-details {
+    margin-top: 20px;
+    background: #eee;
+  }
+  
+  /* Travel plan panel */
+  .travel-plan-panel {
+    border: none;
+    box-shadow: none;
+  }
+  
+  .travel-plan-panel .panel-heading {
+    border-color: #eff2f7;
+    font-size: 16px;
+    font-weight: 300;
+  }
+  
+  .travel-plan-panel .panel-title {
+    color: #2A3542;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 0;
+    margin-top: 0;
+    font-family: 'Open Sans', sans-serif;
+  }
+  
+  /* Travel plan body */
+  .travel-plan-body {
+    padding: 20px;
+    display: flex;
+  }
+  
+  /* Travel plan image details */
+  .travel-plan-img-details img {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+  }
+  
+  /* Travel plan details */
+  .travel-plan-d-title {
+    font-size: 16px;
+    margin-top: 0;
+    color: #5A5A5A;
+  }
+  
+  .travel-plan-body p {
+    color: #3b3b3b;
+  }
+  
+  /* Travel plan meta */
+  .travel-plan-meta {
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+    margin: 15px 0;
+  }
+  
+  .travel-plan-meta .travel-plan-info {
+    display: block;
+    margin-bottom: 10px;
+    color: #fc5959;
+  }
+  
+  /* Travel plan price */
+  .travel-plan-price {
+    font-size: 18px;
+    padding: 0 10px;
+    color: #fc5959;
+  }
+  
