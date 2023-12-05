@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const TravelPlanUser_API_BASE_URL="http://localhost:8088/api/v1/users";
+const TravelPlanUser_API_BASE_URL="http://54.82.26.152:8088/api/v1/users";
 class AuthService{
     getAllUser(){
         return axios.get(TravelPlanUser_API_BASE_URL);

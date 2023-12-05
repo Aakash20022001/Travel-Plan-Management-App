@@ -35,6 +35,11 @@ const UserHeaderComponent = () => {
                 </Link>
               </li>
               <li className="nav-item">
+                <Link className="nav-link" to="/user-profile">
+                  View Profile
+                </Link>
+              </li>
+              <li className="nav-item">
                 <button className="nav-link btn btn-link" onClick={handleLogOut}>
                   Logout
                 </button>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const TravelPlan_API_BASE_URL="http://localhost:8088/api/v1/travelplans";
+const TravelPlan_API_BASE_URL="http://54.82.26.152:8088/api/v1/travelplans";
 
 class AdminService{
 

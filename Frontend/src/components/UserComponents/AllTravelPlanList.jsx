@@ -15,7 +15,13 @@ export default function AllTravelPlanList() {
   const fetchAllTravelPlans = () => {
     UserService.getAllTravelPlans()
       .then((response) => {
-        setAllTravelPlans(response.data);
+        const formattedData = response.data.map((travelPlan) => ({
+          ...travelPlan,
+          start_date: new Date(travelPlan.start_date).toLocaleDateString('en-GB'),
+          end_date: new Date(travelPlan.end_date).toLocaleDateString('en-GB'),
+        }));
+  
+        setAllTravelPlans(formattedData);
       })
       .catch((error) => {
         console.error('Error fetching all travel plans:', error);
@@ -100,7 +106,7 @@ export default function AllTravelPlanList() {
           <div className='col-md-4 mt-3' key={travelPlan.id}>
             <div className='card'>
               <img
-                src={travelPlan.imageUrl}
+                src={travelPlan.image_url}
                 className='card-img-top'
                 alt='Travel Plan'
               />
@@ -111,10 +117,10 @@ export default function AllTravelPlanList() {
                 </h5>
                 <p className='card-text'>{travelPlan.description}</p>
                 <p className='card-text'>
-                  <strong>Start Date:</strong> {travelPlan.startDate}
+                  <strong>Start Date:</strong> {travelPlan.start_date}
                 </p>
                 <p className='card-text'>
-                  <strong>End Date:</strong> {travelPlan.endDate}
+                  <strong>End Date:</strong> {travelPlan.end_date}
                 </p>
                 <p className='card-text'>
                   <strong>Budget:</strong> {travelPlan.budget}

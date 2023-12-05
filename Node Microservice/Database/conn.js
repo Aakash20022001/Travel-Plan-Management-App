@@ -1,9 +1,9 @@
 const mysql = require('mysql2');
 
 const dbConfig = {
-  host: '127.0.0.1',
-  user: 'root',
-  password: 'root@123',
+  host: 'database-1.cmihmejle7vq.us-east-1.rds.amazonaws.com',
+  user: 'admin',
+  password: 'root1234',
   database: 'travel_plan_management_system1',
   waitForConnections: true,
 connectionLimit: 10,
