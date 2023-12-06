@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cspl.travelplanmanagement2.Dto.TravelPlanDTO;
-import com.cspl.travelplanmanagement2.Dto.UserDTO;
 import com.cspl.travelplanmanagement2.Services.TravelPlanService;
 
 @CrossOrigin
@@ -60,12 +59,5 @@ public class AdminController {
 	public ResponseEntity<String> deleteTravelPlan(@PathVariable Long id) {
 		travelPlanService.deleteTravelPlan(id);
 		return new ResponseEntity<>("Travel Plan deleted successfully", HttpStatus.OK);
-	}
-
-	// get registered users for one travel plan
-	@GetMapping("/{id}/users")
-	public ResponseEntity<List<UserDTO>> getUsersForTravelPlan(@PathVariable Long id) {
-		List<UserDTO> users = travelPlanService.getUsersForTravelPlan(id);
-		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 }

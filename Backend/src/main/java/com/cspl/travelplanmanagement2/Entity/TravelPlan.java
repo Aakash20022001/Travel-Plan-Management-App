@@ -58,6 +58,7 @@ public class TravelPlan {
 		this.registeredUsers = registeredUsers;
 	}
 
+	// Constructors, getters, setters, and other methods...
 	public TravelPlan() {
 
 	}

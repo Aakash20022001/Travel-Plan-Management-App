@@ -18,7 +18,6 @@ import com.cspl.travelplanmanagement2.Repository.UserRepo;
 import com.cspl.travelplanmanagement2.Services.UserService;
 import com.cspl.travelplanmanagement2.exceptions.ResourceNotFoundException;
 import com.cspl.travelplanmanagement2.response.LoginResponse;
-import com.cspl.travelplanmanagement2.security.JwtTokenUtil;
 
 @Service
 public class UserIMPL implements UserService {
@@ -31,8 +30,6 @@ public class UserIMPL implements UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
 
 	@Override
 	public String addUser(UserDTO userDto) {
@@ -71,29 +68,27 @@ public class UserIMPL implements UserService {
 
 	@Override
 	public LoginResponse loginUser(LoginDTO loginDTO) {
-		User user1 = userRepository.findByEmail(loginDTO.getEmail());
-
-		if (user1 != null) {
+		User user = userRepository.findByEmail(loginDTO.getEmail());
+		if (user != null) {
 			String password = loginDTO.getPassword();
-			String encodedPassword = user1.getPassword();
-			Boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
+			String encodedPassword = user.getPassword();
+			boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
 
 			if (isPwdRight) {
-				Optional<User> user = userRepository.findOneByEmailAndPassword(loginDTO.getEmail(), encodedPassword);
+				Optional<User> loggedInUser = userRepository.findOneByEmailAndPassword(loginDTO.getEmail(),
+						encodedPassword);
 
-				if (user.isPresent()) {
-					String token = jwtTokenUtil.generateToken(user.get()); // Generate JWT
-					UserDTO userDTO = convertToDTO(user.get());
-
-					return new LoginResponse("Login Success", true, userDTO, token);
+				if (loggedInUser.isPresent()) {
+					UserDTO userDTO = convertToDTO(loggedInUser.get());
+					return new LoginResponse("Login Success", true, userDTO);
 				} else {
-					return new LoginResponse("Login Failed", false);
+					return new LoginResponse("Login Failed", false, null);
 				}
 			} else {
-				return new LoginResponse("Password Not Match", false);
+				return new LoginResponse("Password Not Match", false, null);
 			}
 		} else {
-			return new LoginResponse("Email not exists", false);
+			return new LoginResponse("Email not exists", false, null);
 		}
 	}
 
@@ -116,6 +111,7 @@ public class UserIMPL implements UserService {
 		userDTO.setEmail(user.getEmail());
 		userDTO.setCity(user.getCity());
 		userDTO.setContactNumber(user.getContactNumber());
+		userDTO.setPassword(user.getPassword()); // Note: Storing password in DTO might not be a good practice
 		userDTO.setGender(user.getGender());
 		userDTO.setRole(user.getRole());
 		userDTO.setRegisteredTravelPlans(convertTravelPlansToDTO(user.getRegisteredTravelPlans()));

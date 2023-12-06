@@ -80,19 +80,6 @@ public class User {
 		this.role = role;
 	}
 
-	public User(Long user_id, String fullName, String email, String city, String contactNumber, String gender,
-			String role) {
-		super();
-		this.user_id = user_id;
-		this.fullName = fullName;
-		this.email = email;
-		this.city = city;
-		this.contactNumber = contactNumber;
-//		this.password = password;
-		this.gender = gender;
-		this.role = role;
-	}
-
 	public Long getUser_id() {
 		return user_id;
 	}

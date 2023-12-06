@@ -47,18 +47,6 @@ public class UserDTO {
 		this.registeredTravelPlans = registeredTravelPlans;
 	}
 
-	public UserDTO(Long user_id, String fullName, String email, String city, String contactNumber, String gender,
-			String role) {
-		this.user_id = user_id;
-		this.fullName = fullName;
-		this.email = email;
-		this.city = city;
-		this.contactNumber = contactNumber;
-		this.gender = gender;
-		this.role = role;
-
-	}
-
 	public Long getUser_id() {
 		return user_id;
 	}

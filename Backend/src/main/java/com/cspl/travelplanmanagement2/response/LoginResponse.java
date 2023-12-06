@@ -7,18 +7,16 @@ public class LoginResponse {
 	String message;
 	Boolean status;
 	private UserDTO user;
-	private String token;
 
 	public LoginResponse() {
 
 	}
 
-	public LoginResponse(String message, Boolean status, UserDTO user, String token) {
+	public LoginResponse(String message, Boolean status, UserDTO user) {
 		super();
 		this.message = message;
 		this.status = status;
 		this.user = user;
-		this.token = token;
 	}
 
 	public UserDTO getUser() {
@@ -27,12 +25,6 @@ public class LoginResponse {
 
 	public void setUser(UserDTO user) {
 		this.user = user;
-	}
-
-	public LoginResponse(String message, Boolean status) {
-		super();
-		this.message = message;
-		this.status = status;
 	}
 
 	public String getMessage() {
@@ -49,14 +41,6 @@ public class LoginResponse {
 
 	public void setStatus(Boolean status) {
 		this.status = status;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
 	}
 
 	@Override

@@ -94,6 +94,8 @@ public class TravelPlanDTO {
 		this.imageUrl = imageUrl;
 	}
 
+	// Additional methods if needed...
+
 	@Override
 	public String toString() {
 		return "TravelPlanDTO [id=" + id + ", origin=" + origin + ", destination=" + destination + ", startDate="
