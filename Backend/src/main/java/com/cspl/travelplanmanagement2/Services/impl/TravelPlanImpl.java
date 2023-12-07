@@ -88,12 +88,6 @@ public class TravelPlanImpl implements TravelPlanService {
                 user.getRegisteredTravelPlans().stream().map(this::convertToDTO).collect(Collectors.toSet()));
     }
 
-    private TravelPlanDTO convertToDTO(TravelPlan travelPlan) {
-        return new TravelPlanDTO(travelPlan.getId(), travelPlan.getOrigin(), travelPlan.getDestination(),
-                travelPlan.getStartDate(), travelPlan.getEndDate(), travelPlan.getDescription(), travelPlan.getBudget(),
-                travelPlan.getImageUrl());
-    }
-
     private TravelPlan convertToEntity(TravelPlanDTO travelPlanDTO) {
         TravelPlan travelPlan = new TravelPlan();
         travelPlan.setOrigin(travelPlanDTO.getOrigin());
