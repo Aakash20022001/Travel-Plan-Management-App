@@ -85,7 +85,13 @@ public class TravelPlanImpl implements TravelPlanService {
     private UserDTO convertUserToDTO(User user) {
         return new UserDTO(user.getUser_id(), user.getFullName(), user.getEmail(), user.getCity(),
                 user.getContactNumber(), user.getPassword(), user.getGender(), user.getRole(),
-                user.getRegisteredTravelPlans());
+                user.getRegisteredTravelPlans().stream().map(this::convertToDTO).collect(Collectors.toSet()));
+    }
+
+    private TravelPlanDTO convertToDTO(TravelPlan travelPlan) {
+        return new TravelPlanDTO(travelPlan.getId(), travelPlan.getOrigin(), travelPlan.getDestination(),
+                travelPlan.getStartDate(), travelPlan.getEndDate(), travelPlan.getDescription(), travelPlan.getBudget(),
+                travelPlan.getImageUrl());
     }
 
     private TravelPlan convertToEntity(TravelPlanDTO travelPlanDTO) {
