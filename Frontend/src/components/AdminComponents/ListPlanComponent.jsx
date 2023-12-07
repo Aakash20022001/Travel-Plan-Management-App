@@ -68,7 +68,8 @@ export default function ListPlanComponent() {
             <div className='card'>
               <img
                 src={travelPlan.imageUrl}
-                className='card-img-top'
+                className='card-img-top'  width={348}
+                height={232}
                 alt='Travel Plan'
               />
               <div className='card-body'>

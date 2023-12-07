@@ -107,7 +107,8 @@ export default function AllTravelPlanList() {
             <div className='card'>
               <img
                 src={travelPlan.image_url}
-                className='card-img-top'
+                className='card-img-top'  width={348}
+                height={232}
                 alt='Travel Plan'
               />
               <div className='card-body'>

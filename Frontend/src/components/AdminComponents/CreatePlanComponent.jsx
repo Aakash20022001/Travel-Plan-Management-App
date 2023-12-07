@@ -1,54 +1,57 @@
+// CreatePlanComponent.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AdminService from '../../services/AdminService';
 import { toast, Toaster } from 'react-hot-toast';
 
 const CreatePlanComponent = () => {
-    //step 2
     const { id } = useParams();
     const [origin, setOrigin] = useState('');
     const [destination, setDestination] = useState('');
-    const [startdate, setStartDate] = useState('');
-    const [enddate, setEndDate] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
     const [description, setDescription] = useState('');
     const [budget, setBudget] = useState('');
     const [imageurl, setImageURL] = useState('');
     const navigate = useNavigate();
+
     const handleOriginChange = (event) => {
         setOrigin(event.target.value);
     };
+
     const handleDestinationChange = (event) => {
         setDestination(event.target.value);
     };
+
     const handleStartDateChange = (event) => {
         setStartDate(event.target.value);
     };
+
     const handleEndDateChange = (event) => {
         setEndDate(event.target.value);
     };
+
     const handleDescriptionChange = (event) => {
         setDescription(event.target.value);
     };
+
     const handleBudgetChange = (event) => {
         setBudget(event.target.value);
     };
+
     const handleImageUrlChange = (event) => {
         setImageURL(event.target.value);
     };
-    //step 3
+
     useEffect(() => {
-        // Fetch employee data when the component mounts
-        //step 4
-        if (!id||id === "-1") {
-            return ;
-        } 
-        else {
+        if (!id || id === "-1") {
+            return;
+        } else {
             const fetchTravelPlanData = async () => {
                 try {
                     const response = await AdminService.getPlanById(id);
                     const travelplan = response.data;
 
-                    // Set the state with the fetched employee data
                     setOrigin(travelplan.origin);
                     setDestination(travelplan.destination);
                     setStartDate(travelplan.startDate);
@@ -56,7 +59,6 @@ const CreatePlanComponent = () => {
                     setDescription(travelplan.description);
                     setBudget(travelplan.budget);
                     setImageURL(travelplan.imageUrl);
-
                 } catch (error) {
                     console.error('Error fetching travel data:', error);
                 }
@@ -66,44 +68,46 @@ const CreatePlanComponent = () => {
         }
     }, [id]);
 
-    const saveTravelPlan = async(event) => {
+    const saveTravelPlan = async (event) => {
         event.preventDefault();
         let travelPlanData = {
-            origin : origin,
+            origin: origin,
             destination: destination,
-            startDate:startdate,
-            endDate: enddate,
-            description:description,
-            budget:budget,
-            imageUrl:imageurl
+            startDate: startDate,
+            endDate: endDate,
+            description: description,
+            budget: budget,
+            imageUrl: imageurl
         };
+
         try {
             if (!id || id === "-1") {
-              await AdminService.createPlan(travelPlanData);
-              navigate('/admin-home/');
-              toast.success('Travel plan created successfully!');
+                await AdminService.createPlan(travelPlanData);
+                navigate('/admin-home/');
+                toast.success('Travel plan created successfully!');
             } else {
-              await AdminService.updatePlan(travelPlanData, id);
-              navigate("/admin-home/");
-              toast.success('Travel plan updated successfully!');
+                await AdminService.updatePlan(travelPlanData, id);
+                navigate("/admin-home/");
+                toast.success('Travel plan updated successfully!');
             }
-          } catch (error) {
+        } catch (error) {
             console.error('Error:', error);
             toast.error('Error saving travel plan. Please try again.');
-          }
-
+        }
     };
+
     const cancel = (event) => {
         navigate('/admin-home');
     };
-    const getTitle = (event) => {
+
+    const getTitle = () => {
         if (id === "-1") {
             return <h3 className="text-center">Add New Travel Plan</h3>
-        }
-        else {
+        } else {
             return <h3 className="text-center">Update Existing Travel Plan</h3>
         }
     };
+
     return (
         <div>
             <div className="container">
@@ -112,6 +116,7 @@ const CreatePlanComponent = () => {
                         {getTitle()}
                         <div className="card-body">
                             <form>
+                                {/* Other form inputs */}
                                 <div className="form-group">
                                     <label htmlFor="Origin">Origin City:</label>
                                     <input
@@ -141,7 +146,7 @@ const CreatePlanComponent = () => {
                                         className="form-control"
                                         id="startdate"
                                         placeholder="Enter Start Date"
-                                        value={startdate}
+                                        value={startDate}
                                         onChange={handleStartDateChange}
                                     />
                                 </div>
@@ -152,7 +157,7 @@ const CreatePlanComponent = () => {
                                         className="form-control"
                                         id="enddate"
                                         placeholder="Enter End Date"
-                                        value={enddate}
+                                        value={endDate}
                                         onChange={handleEndDateChange}
                                     />
                                 </div>
@@ -189,7 +194,8 @@ const CreatePlanComponent = () => {
                                         value={imageurl}
                                         onChange={handleImageUrlChange}
                                     />
-                                    </div>
+                                </div>
+                                {/* Other form inputs */}
                                 <button className='btn btn-success' onClick={saveTravelPlan}>Save</button>
                                 <button className='btn btn-danger' onClick={cancel} style={{ marginLeft: "10px" }}>Cancel</button>
                             </form>
