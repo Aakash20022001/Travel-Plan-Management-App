@@ -1,13 +1,17 @@
 package com.cspl.travelplanmanagement2.Services.impl;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+//import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cspl.travelplanmanagement2.Dto.TravelPlanDTO;
+import com.cspl.travelplanmanagement2.Dto.UserDTO;
 import com.cspl.travelplanmanagement2.Entity.TravelPlan;
+import com.cspl.travelplanmanagement2.Entity.User;
 import com.cspl.travelplanmanagement2.Repository.TravelPlanRepository;
 import com.cspl.travelplanmanagement2.Services.TravelPlanService;
 import com.cspl.travelplanmanagement2.exceptions.ResourceNotFoundException;
@@ -38,16 +42,32 @@ public class TravelPlanImpl implements TravelPlanService {
 		return savedTravelPlan.getId();
 	}
 
+//	@Override
+//	public TravelPlanDTO updateTravelPlan(Long id, TravelPlanDTO travelPlanDTO) {
+//		TravelPlan existingTravelPlan = travelPlanRepository.findById(id)
+//				.orElseThrow(() -> new ResourceNotFoundException("Travel Plan not found with id: " + id));
+//
+//		TravelPlan updatedTravelPlan = travelPlanRepository.save(existingTravelPlan);
+//		return convertToDTO(updatedTravelPlan);
+//	}
 	@Override
 	public TravelPlanDTO updateTravelPlan(Long id, TravelPlanDTO travelPlanDTO) {
 		TravelPlan existingTravelPlan = travelPlanRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Travel Plan not found with id: " + id));
 
-		// Update existingTravelPlan fields with values from travelPlanDTO
-		// Example: existingTravelPlan.setName(travelPlanDTO.getName());
-		// Update other properties similarly
+		// Update the fields of existingTravelPlan with the values from travelPlanDTO
+		existingTravelPlan.setOrigin(travelPlanDTO.getOrigin());
+		existingTravelPlan.setDestination(travelPlanDTO.getDestination());
+		existingTravelPlan.setStartDate(travelPlanDTO.getStartDate());
+		existingTravelPlan.setEndDate(travelPlanDTO.getEndDate());
+		existingTravelPlan.setDescription(travelPlanDTO.getDescription());
+		existingTravelPlan.setBudget(travelPlanDTO.getBudget());
+		existingTravelPlan.setImageUrl(travelPlanDTO.getImageUrl());
 
+		// Save the updated TravelPlan
 		TravelPlan updatedTravelPlan = travelPlanRepository.save(existingTravelPlan);
+
+		// Convert and return the updated TravelPlanDTO
 		return convertToDTO(updatedTravelPlan);
 	}
 
@@ -56,18 +76,27 @@ public class TravelPlanImpl implements TravelPlanService {
 		travelPlanRepository.deleteById(id);
 	}
 
-	// Helper methods to convert between DTO and Entity
+	@Override
+	public List<UserDTO> getUsersForTravelPlan(Long travelPlanId) {
+		TravelPlan travelPlan = travelPlanRepository.findById(travelPlanId)
+				.orElseThrow(() -> new ResourceNotFoundException("Travel Plan not found with id: " + travelPlanId));
+
+		Set<User> registeredUsers = travelPlan.getRegisteredUsers();
+		return registeredUsers.stream().map(this::convertUserToDTO).collect(Collectors.toList());
+	}
+
 	private TravelPlanDTO convertToDTO(TravelPlan travelPlan) {
-		// Convert TravelPlan to TravelPlanDTO
 		return new TravelPlanDTO(travelPlan.getId(), travelPlan.getOrigin(), travelPlan.getDestination(),
 				travelPlan.getStartDate(), travelPlan.getEndDate(), travelPlan.getDescription(), travelPlan.getBudget(),
-				travelPlan.getImageUrl()
-		// Map other properties
-		);
+				travelPlan.getImageUrl());
+	}
+
+	private UserDTO convertUserToDTO(User user) {
+		return new UserDTO(user.getUser_id(), user.getFullName(), user.getEmail(), user.getCity(),
+				user.getContactNumber(), user.getGender(), user.getRole());
 	}
 
 	private TravelPlan convertToEntity(TravelPlanDTO travelPlanDTO) {
-		// Convert TravelPlanDTO to TravelPlan
 		TravelPlan travelPlan = new TravelPlan();
 		travelPlan.setOrigin(travelPlanDTO.getOrigin());
 		travelPlan.setDestination(travelPlanDTO.getDestination());
@@ -77,7 +106,6 @@ public class TravelPlanImpl implements TravelPlanService {
 		travelPlan.setBudget(travelPlanDTO.getBudget());
 		travelPlan.setImageUrl(travelPlanDTO.getImageUrl());
 		return travelPlan;
-		// Map other properties
 
 	}
 }
